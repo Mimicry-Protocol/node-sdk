@@ -1,7 +1,7 @@
 {
   "name": "@mimicry/mimicry-sdk",
   "version": "0.0.1",
-  "description": "A set of convenience methods for interacting with the Mimicry Protocol.",
+  "description": "A node SDK designed to simplify interaction with the Mimicry Protocol smart contracts.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
