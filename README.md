@@ -13,48 +13,11 @@ import { ethers } from "ethers";
 const pk = process.env.PRIVATE_KEY;
 const providerUrl = process.env.PROVIDER_URL;
 const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-const wallet = new ethers.Wallet(pk as string, provider);
-const mimicry = new MimicrySDK(wallet); // note that wallet has the chainId
-```
-
-## Enums
-
-```typescript
-enum Chain {
-    ETHEREUM_MAINNET: 1,
-    POLYGON_POS: 137,
-    POLYGON_MUMBAI: 80001
-}
-
-enum Currency {
-    WETH: "WETH",
-    USDC: "USDC"
-}
-
-enum Direction {
-    LONG: "long",
-    SHORT: "short"
-}
-
-enum OracleType {
-    OMO: "open-markets-oracle"
-}
-
-enum Metric {
-    MARKET_CAP: "market-cap"
-}
-
-enum TransferType {
-    DEPOSIT: "deposit",
-    WITHDRAW: "withdraw",
-    FEE_PAYMENT: "fee-payment",
-    FEE_CREDIT: "fee-credit",
-    REWARD: "token-reward"
-}
+const signer = new ethers.Wallet(pk as string, provider);
+const mimicry = new MimicrySDK(signer);
 ```
 
 ## Types
-
 ```typescript
 interface PositionInfo {
     id: number,
