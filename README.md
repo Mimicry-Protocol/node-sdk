@@ -1,157 +1,103 @@
-# mimicry-sdk
-A node SDK designed to simplify interaction with the Mimicry Protocol smart contracts.
+# TSDX User Guide
 
-## Summary
-Mimicry is working to release an NPM library that will provide convenient access to contract methods. The intended audience is professional traders and market makers who wish to programmatically manage positions, and application developers who wish to integrate Mimicry Markets.
+Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-## Setup
-The SDK allows developers to instantiate an instance in a few lines of code. For example:
-```typescript
-import { MimicrySDK } from "@mimicry/mimicry-sdk";
-import { ethers } from "ethers";
+> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
 
-const pk = process.env.PRIVATE_KEY;
-const providerUrl = process.env.PROVIDER_URL;
-const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-const signer = new ethers.Wallet(pk as string, provider);
-const mimicry = new MimicrySDK(signer);
+> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+
+## Commands
+
+TSDX scaffolds your new library inside `/src`.
+
+To run TSDX, use:
+
+```bash
+npm start # or yarn start
 ```
 
-## Types
-```typescript
-interface PositionInfo {
-    id: number,
-    createdAt: number,     // unix timestamp
-    createdOn: number      // block number
-    createdBy: Player,
-    direction: Direction,   
-    market: Market,         
-    player: Player,
-    transfers: Transfer[],
-    usdValue: number,
-    exitFee: 30,           // basis points
-    doesEarnFees: false,
-    unrealizedProfit: BigNumber,
-    realizedProfit: BigNumber
-}
+This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
 
-interface Market {
-    id: number,
-    createdAt: Date,
-    createdBy: Player,
-    name: string,
-    oracle: Oracle,
-    positions: Position[],
-    players: Player[],
-    skew: Skew,
-}
+To do a one-off build, use `npm run build` or `yarn build`.
 
-interface Skew {
-    long: Value;
-    short: Value;
-}
+To run tests, use `npm test` or `yarn test`.
 
-interface Player {
-    address: string,
-    positions: Position[]
-}
+## Configuration
 
-interface Oracle {
-    currency: Currency,
-    latestValue: Amount,
-    latestUpdateAt: Date,
-}
+Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
 
-// Deposit or Withdraw event
-interface Transfer {
-    id: number,
-    cratedAt: Date,
-    direction: Direction,
-    type: TransferType,
-    values: Value[]   // allows for multiple-currency withdraws
-}
+### Jest
 
-interface Value {
-    currency: CurrencyInfo,
-    amount: Amount
-}
+Jest tests are set up to run with `npm test` or `yarn test`.
 
-interface CurrencyInfo {
-    symbol: string,     // e.g. WETH
-    decimals: number,   // e.g. 18
-    chainId: Chain,     // e.g. 137
-    address: string,    // e.g. 0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619
-}
+### Bundle Analysis
 
-interface Amount {
-    atomic: BigNumber,  // e.g. 26476561042796000000000
-    decimal: number     // e.g. 26476.561042796
+[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
+
+#### Setup Files
+
+This is the folder structure we set up for you:
+
+```txt
+/src
+  index.tsx       # EDIT THIS
+/test
+  blah.test.tsx   # EDIT THIS
+.gitignore
+package.json
+README.md         # EDIT THIS
+tsconfig.json
+```
+
+### Rollup
+
+TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+
+### TypeScript
+
+`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+
+## Continuous Integration
+
+### GitHub Actions
+
+Two actions are added by default:
+
+- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
+- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+
+## Optimizations
+
+Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+
+```js
+// ./types/index.d.ts
+declare var __DEV__: boolean;
+
+// inside your code...
+if (__DEV__) {
+  console.log('foo');
 }
 ```
 
+You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
 
-## Currencies
-```typescript
-const currencyInfos: CurrencyInfo[] = await mimicry.getCurrencies();
-console.log(currencyInfos[0]);
-// {
-//     symbol: "WETH"
-//     decimals: 18
-//     chainId: 137
-//     address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
-// }
-```
+## Module Formats
 
-## Positions
-```typescript
-const positions: Position[] = await mimicry.getPositions();
-console.log(await positions[0].getInfo());
-// {
-//     id: 123,
-//     createdAt: 1620594767,
-//     createdOn: 42512169,
-//     createdBy: {...},
-//     direction: "long",   
-//     market: {...},         
-//     player: {...},
-//     transfers: [{...}],
-//     usdValue: 10
-//     unrealizedProfit: 0
-//     realizedProfit: 0
-// }
-const position123: Position = await mimicry.getPosition(123);
-const txId1: string = await position123.deposit(
-    Currency.USDC,
-    10800000        // position123 is now worth $20.8
-);
-const txId2: string = await position123.withdraw(500000); // 50%
-const position123value: Value = await position123.value();
-// {
-//     currency: {
-//         symbol: "USD",
-//         decimals: 8
-//     }, 
-//     amount: {
-//         atomic: 1040000000,
-//         decimal: 10.4
-//     }
-// }
-const txId3: string = await position123.close();
-```
+CJS, ESModules, and UMD module formats are supported.
 
-```typescript
-/**
- * Retrieves Positions opened by a wallet address.
- *
- * @param {string=} address - (Optional) The wallet address to retrieve the positions for. If omitted, the balance for the default wallet address will be retrieved.
- * @returns {Position[]} A list of Positions
- */
-function getPositions(address)
-```
+The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
 
-```typescript
-// Gets a list of Positions 
-async function getPositions(address: string): Promise<Position[]>;
-async function getPositions(address: string): Promise<Position[]>;
-async function getPositions(address: string): Promise<Position[]>;
-```
+## Named Exports
+
+Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+
+## Including Styles
+
+There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+
+For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+
+## Publishing to NPM
+
+We recommend using [np](https://github.com/sindresorhus/np).
