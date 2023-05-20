@@ -40,7 +40,8 @@
     "mimicry",
     "sdk",
     "nft",
-    "nfts"
+    "nfts",
+    "perps"
   ],
   "module": "dist/sdk.esm.js",
   "size-limit": [
