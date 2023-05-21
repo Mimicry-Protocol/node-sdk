@@ -1,4 +1,10 @@
-# TSDX User Guide
+[![size](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml)&nbsp;&nbsp;[![CI](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml)
+<br /><br />
+
+------
+# Node SDK for the Mimicry Protocol
+
+
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
