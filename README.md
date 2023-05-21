@@ -1,102 +1,42 @@
-[![size](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml)&nbsp;&nbsp;[![CI](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml)
-<br />
+<p align="center">
+  <a href="https://mimicry.org">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Mimicry-Protocol/brand-assets/main/animated-logos/Gifs/Web-Res/Circles/Mimicry_logo-color-black_circle_bg-animated.gif">
+      <img src="https://raw.githubusercontent.com/Mimicry-Protocol/brand-assets/main/animated-logos/Gifs/Web-Res/Circles/Mimicry_logo-color-black_circle_bg-animated.gif" height="128">
+    </picture>
+    <h1 align="center">Mimicry - Node SDK</h1>
+  </a>
+</p>
+<p align="center">
+  <a aria-label="License" href="LICENSE">
+    <img src="https://badgen.net/badge/license/GPLv3/pink">
+  </a>&nbsp;
+  <a aria-label="Size Test" href="https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml">
+    <img alt="" src="https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml/badge.svg">
+  </a>&nbsp;
+  <a aria-label="CI Test" href="https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml">
+    <img alt="" src="https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml/badge.svg">
+  </a>
+</p>
 
-# Node SDK for the Mimicry Protocol
+This NPM library provides convenient access to smart contracts used by the Mimicry Protocol. 
 
+The intended audience is professional traders and market makers who wish to programmatically manage positions, and application developers who wish to integrate Mimicry Markets into their apps.
 
-
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
-
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
-
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
-
-## Commands
-
-TSDX scaffolds your new library inside `/src`.
+## For Contributors
 
 To run TSDX, use:
 
 ```bash
-npm start # or yarn start
+yarn start
 ```
 
 This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
 
-To do a one-off build, use `npm run build` or `yarn build`.
+To do a one-off build, use `yarn build`.
 
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
+To run tests, use `yarn test`.
 
 ### Bundle Analysis
 
 [`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
-```
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
