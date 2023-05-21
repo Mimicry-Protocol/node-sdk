@@ -23,6 +23,20 @@ This NPM library provides convenient access to smart contracts used by the Mimic
 
 The intended audience is professional traders and market makers who wish to programmatically manage positions, and application developers who wish to integrate Mimicry Markets into their apps.
 
+## Setup
+The SDK allows developers to instantiate an instance in a few lines of code. For example:
+```typescript
+import { MimicrySDK } from "@mimicry/mimicry-sdk";
+import { ethers } from "ethers";
+
+const pk = process.env.PRIVATE_KEY;
+const providerUrl = process.env.PROVIDER_URL;
+const provider = new ethers.providers.JsonRpcProvider(providerUrl);
+const signer = new ethers.Wallet(pk as string, provider);
+const mimicry = new MimicrySDK(signer);
+```
+
+
 ## For Contributors
 
 To run TSDX, use:
@@ -33,10 +47,11 @@ yarn start
 
 This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
 
-To do a one-off build, use `yarn build`.
+- To do a one-off build, use `yarn build`.
+- To run tests, use `yarn test`.
+- To run linting, use `yarn lint`.
+- To run linting and fix issues, use `yarn lint:fix`.
+- To analyize package size, use `yarn size`.
+- To visualize package size, use `yarn size:analyze`.
+- To publish to NPM, use `yarn publish`.
 
-To run tests, use `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.

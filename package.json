@@ -18,7 +18,7 @@
     "lint:fix": "tsdx lint --fix",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why",
+    "size:analyze": "size-limit --why",
     "publish": "np"
   },
   "husky": {
@@ -64,5 +64,8 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.5.1",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ethers": "^6.4.0"
   }
 }
