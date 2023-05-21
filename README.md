@@ -1,7 +1,6 @@
 [![size](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml)&nbsp;&nbsp;[![CI](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml)
 <br />
 
-------
 # Node SDK for the Mimicry Protocol
 
 
