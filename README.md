@@ -1,4 +1,10 @@
-# TSDX User Guide
+[![size](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/size.yml)&nbsp;&nbsp;[![CI](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/Mimicry-Protocol/node-sdk/actions/workflows/main.yml)
+<br /><br />
+
+------
+# Node SDK for the Mimicry Protocol
+
+
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
@@ -91,12 +97,6 @@ The appropriate paths are configured in `package.json` and `dist/index.js` accor
 ## Named Exports
 
 Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
 
 ## Publishing to NPM
 
