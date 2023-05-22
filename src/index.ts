@@ -1,2 +1,3 @@
 export * from './lib/mimicry/mimicry';
-export * from './lib/utils/sum';
+export * from './lib/enums';
+export * from './lib/types';
