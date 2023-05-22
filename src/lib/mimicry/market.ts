@@ -24,6 +24,7 @@ export class Market {
     return new Market(contract, _signer);
   }
 
+  // ---- MARKET INFO ---------------------------------------------------------
   public async getInfo(): Promise<MarketInfo> {
     const metadata = await this.getMetadata();
     const currencyInfo = await this.getCurrencyInfo(metadata.currency);
@@ -38,28 +39,6 @@ export class Market {
       skew: await this.getSkew(),
     };
     return info;
-  }
-
-  public async getCurrencyInfo(
-    _address: string | CurrencySymbol
-  ): Promise<CurrencyInfo> {
-    if (_address === 'usd') {
-      // TODO: Remove this hack when metadata has decimals
-      return {
-        name: 'US Dollar',
-        symbol: CurrencySymbol.USD,
-        decimals: BigInt(0),
-      };
-    } else if (_address === CurrencySymbol.USD) {
-      return {
-        name: 'US Dollar',
-        symbol: CurrencySymbol.USD,
-        decimals: BigInt(8),
-      };
-    }
-
-    const currency = await Currency.initialize(_address, this.signer);
-    return await currency.getInfo();
   }
 
   public async getMetadata(): Promise<any> {
@@ -89,6 +68,30 @@ export class Market {
     };
   }
 
+  // ---- CURRENCY INFO -------------------------------------------------------
+  public async getCurrencyInfo(
+    _address: string | CurrencySymbol
+  ): Promise<CurrencyInfo> {
+    if (_address === 'usd') {
+      // TODO: Remove this hack when metadata has decimals
+      return {
+        name: 'US Dollar',
+        symbol: CurrencySymbol.USD,
+        decimals: BigInt(0),
+      };
+    } else if (_address === CurrencySymbol.USD) {
+      return {
+        name: 'US Dollar',
+        symbol: CurrencySymbol.USD,
+        decimals: BigInt(8),
+      };
+    }
+
+    const currency = await Currency.initialize(_address, this.signer);
+    return await currency.getInfo();
+  }
+
+  // ---- POSITIONS -----------------------------------------------------------
   public async getPositionValue(_positionId: number): Promise<Value> {
     const currencyInfo = await this.getCurrencyInfo(CurrencySymbol.USD);
     return bigIntToValue(
@@ -97,6 +100,7 @@ export class Market {
     );
   }
 
+  // ---- VALUE TRANSFERS -----------------------------------------------------
   public async commitValueTransfer(): Promise<ContractTransactionResponse> {
     return await this.contract.commitValueTransfer();
   }
