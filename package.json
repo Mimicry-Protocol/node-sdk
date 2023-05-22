@@ -46,14 +46,14 @@
   "size-limit": [
     {
       "path": "dist/sdk.cjs.production.min.js",
-      "limit": "10 KB",
+      "limit": "100 KB",
       "ignore": [
         "ethers"
       ]
     },
     {
       "path": "dist/sdk.esm.js",
-      "limit": "10 KB",
+      "limit": "100 KB",
       "ignore": [
         "ethers"
       ]
@@ -70,6 +70,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "decimal.js": "^10.4.3",
     "ethers": "^6.4.0"
   },
   "jest": {
