@@ -3,14 +3,14 @@ import * as MimicryABI from './abi/mimicry.json';
 // import { Market } from './market';
 // import { MarketInfo } from '../types';
 
-export class MimicrySDK {
-  // private signer: Signer;
-  public factory: Contract;
+export class Mimicry {
+  private signer: Signer;
+  private contract: Contract;
 
   constructor(_signer: Signer, _network: number) {
-    // this.signer = _signer;
+    this.signer = _signer;
 
-    this.factory = new Contract(
+    this.contract = new Contract(
       '0x3fF86EEc088ea07464E5329db10f94AC859be633',
       MimicryABI.abi as any,
       _signer
@@ -21,10 +21,10 @@ export class MimicrySDK {
     }
   }
 
-  // public async getMarkets() {
-  //   const markets = await this.factory.getMarkets();
-  //   return markets;
-  // }
+  public async getMarkets() {
+    const markets = await this.contract.getMarkets();
+    return markets;
+  }
 
   // ---- MARKETS ---------------------------------------------------------------
   // public async addMarket(_info: MarketInfo): Promise<Market> {

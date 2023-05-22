@@ -1,4 +1,4 @@
-import { MimicrySDK, sum } from '../dist/index.js';
+import { Mimicry, sum } from '../dist/index.js';
 import { ethers } from "ethers";
 import 'dotenv/config';
 
@@ -11,7 +11,7 @@ try {
 
     const provider = new ethers.JsonRpcProvider(providerUrl);
     const signer = new ethers.Wallet(privateKey, provider);
-    const mimicry = new MimicrySDK(signer, 80001);
+    const mimicry = new Mimicry(signer, 80001);
 
     console.log(await mimicry.factory.getMarkets());
     console.log(sum(1, 2));

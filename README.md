@@ -26,7 +26,7 @@ The intended audience is professional traders and market makers who wish to prog
 ## Setup
 The SDK allows developers to instantiate an instance in a few lines of code. For example:
 ```typescript
-import { MimicrySDK } from "@mimicry/mimicry-sdk";
+import { Mimicry } from "@mimicry/mimicry-sdk";
 import { ethers } from "ethers";
 import 'dotenv/config';
 
@@ -34,7 +34,7 @@ const privateKey = process.env.PRIVATE_KEY;
 const providerUrl = process.env.PROVIDER_URL;
 const provider = new ethers.JsonRpcProvider(providerUrl);
 const signer = new ethers.Wallet(privateKey, provider);
-const mimicry = new MimicrySDK(signer, 80001);
+const mimicry = new Mimicry(signer, 80001);
 ```
 
 
