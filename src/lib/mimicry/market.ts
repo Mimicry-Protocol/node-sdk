@@ -3,6 +3,7 @@ import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
 import { CurrencySymbol, Direction } from '../enums';
 import { Currency } from './currency';
 import { bigIntToValue } from '../utils/bigIntToValue';
+import { numberToBigInt } from '../utils/numberToBigInt';
 import * as MarketABI from './abi/market.json';
 
 export class Market {
@@ -112,36 +113,48 @@ export class Market {
       throw new Error('Position has been liquidated.');
     }
 
-    return await this.contract.closePosition(_positionId);
+    const tx = await this.contract.closePosition(_positionId);
+    return await tx.wait();
   }
 
-  // public async openPosition(
-  //   _direction: Direction,
-  //   _currencyAddress: string,
-  //   _amount: BigInt
-  // ): Promise<ContractTransactionResponse> {
-  //   // TODO: Account for spending approvals
-  //   return await this.contract.openPosition(
-  //     _direction,
-  //     _currencyAddress,
-  //     _amount
-  //   );
-  // }
+  public async openPosition(
+    _direction: Direction,
+    _currency: Currency,
+    _amount: number
+  ): Promise<ContractTransactionResponse[]> {
+    const txApproveReceipt = await _currency.approveSpending(
+      await this.getAddress(),
+      _amount
+    );
+    const currencyInfo = await _currency.getInfo();
+    const amount = numberToBigInt(_amount, currencyInfo);
+
+    const tx = await this.contract.openPosition(
+      _direction,
+      currencyInfo.address,
+      amount
+    );
+    const txOpenPositionReceipt = await tx.wait();
+    return [txApproveReceipt, txOpenPositionReceipt];
+  }
 
   // public async increasePosition(
   //   _positionId: number,
   //   _amount: BigInt
   // ): Promise<ContractTransactionResponse> {
+  //   // TODO: Get the currency used to open the position
   //   // TODO: Account for spending approvals
   //   if (await !this.contract.isPositionEditable(_positionId)) {
   //     throw new Error('Position is not editable.');
   //   }
 
-  //   return await this.contract.increasePosition(_positionId, _amount);
+  //   const tx = await this.contract.increasePosition(_positionId, _amount);
+  //   return await tx.wait();
   // }
 
   // ---- VALUE TRANSFERS -----------------------------------------------------
   public async commitValueTransfer(): Promise<ContractTransactionResponse> {
-    return await this.contract.commitValueTransfer();
+    const tx = await this.contract.commitValueTransfer();
+    return await tx.wait();
   }
 }
