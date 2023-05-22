@@ -43,7 +43,14 @@ export class Market {
   public async getCurrencyInfo(
     _address: string | CurrencySymbol
   ): Promise<CurrencyInfo> {
-    if (_address === 'usd' || _address === CurrencySymbol.USD) {
+    if (_address === 'usd') {
+      // TODO: Remove this hack when metadata has decimals
+      return {
+        name: 'US Dollar',
+        symbol: CurrencySymbol.USD,
+        decimals: BigInt(0),
+      };
+    } else if (_address === CurrencySymbol.USD) {
       return {
         name: 'US Dollar',
         symbol: CurrencySymbol.USD,
