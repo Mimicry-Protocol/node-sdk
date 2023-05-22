@@ -1,40 +1,30 @@
-import { Wallet } from 'ethers';
+import { Signer, Contract } from 'ethers';
+import * as MimicryABI from './abi/mimicry.json';
 // import { Market } from './market';
 // import { MarketInfo } from '../types';
-// const MIMICRY_ABI = require('./abi/mimicry.json');
 
 export class MimicrySDK {
-  private signer: Wallet;
-  private network: number;
-  // private factory: Contract;
+  // private signer: Signer;
+  public factory: Contract;
 
-  // private addressBook = {
-  //     137: {
-  //         mimicry: '0x123',
-  //         factory: '0x123',
-  //     },
-  //     80001: {
-  //         mimicry: '0x123',
-  //         factory: '0x123',
-  //     },
-  // };
+  constructor(_signer: Signer, _network: number) {
+    // this.signer = _signer;
 
-  constructor(_signer: Wallet, _network: number) {
-    this.signer = _signer;
-    this.network = _network;
+    this.factory = new Contract(
+      '0x3fF86EEc088ea07464E5329db10f94AC859be633',
+      MimicryABI.abi as any,
+      _signer
+    );
 
     if (__DEV__) {
       console.log('MimicrySDK constructor');
-      console.log(this.network);
-      console.log(this.signer);
     }
-
-    // this.factory = new Contract(
-    //     this.addressBook[_network].mimicry,
-    //     MIMICRY_ABI,
-    //     this.signer
-    // );
   }
+
+  // public async getMarkets() {
+  //   const markets = await this.factory.getMarkets();
+  //   return markets;
+  // }
 
   // ---- MARKETS ---------------------------------------------------------------
   // public async addMarket(_info: MarketInfo): Promise<Market> {
