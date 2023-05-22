@@ -13,12 +13,11 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --no-cache",
+    "prepare": "tsdx build",
+    "test": "tsdx test --no-cache && tsdx lint && size-limit",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "tsdx build",
     "size": "size-limit",
-    "size:analyze": "size-limit --why",
     "publish": "np"
   },
   "husky": {
@@ -48,17 +47,20 @@
     {
       "path": "dist/sdk.cjs.production.min.js",
       "limit": "10 KB",
-      "ignore": ["ethers"]
+      "ignore": [
+        "ethers"
+      ]
     },
     {
       "path": "dist/sdk.esm.js",
       "limit": "10 KB",
-      "ignore": ["ethers"]
+      "ignore": [
+        "ethers"
+      ]
     }
   ],
   "devDependencies": {
     "@size-limit/esbuild": "^8.2.4",
-    "@size-limit/esbuild-why": "^8.2.4",
     "@size-limit/preset-small-lib": "^8.2.4",
     "husky": "^8.0.3",
     "np": "^7.7.0",
