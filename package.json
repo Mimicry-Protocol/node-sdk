@@ -79,9 +79,6 @@
       "__DEV__": true
     }
   },
-  "np": {
-    "contents": "dist"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
