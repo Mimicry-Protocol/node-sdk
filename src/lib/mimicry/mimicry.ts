@@ -1,8 +1,8 @@
 import { Signer, Contract } from 'ethers';
-import * as MimicryABI from './abi/mimicry.json';
+import { ChainId } from '../enums';
 import { Market } from './market';
 import { Currency } from './currency';
-import { ChainId } from '../enums';
+import * as MimicryABI from './abi/mimicry.json';
 
 export class Mimicry {
   private signer: Signer;
