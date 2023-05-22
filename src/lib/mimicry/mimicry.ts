@@ -1,7 +1,8 @@
 import { Signer, Contract } from 'ethers';
-import { ChainId } from '../enums';
+import { ChainId, CurrencySymbol } from '../enums';
 import { Market } from './market';
 import { Currency } from './currency';
+import { bigIntToValue } from '../utils/bigIntToValue';
 import * as MimicryABI from './abi/mimicry.json';
 
 export class Mimicry {
@@ -10,6 +11,17 @@ export class Mimicry {
 
   constructor(_signer: Signer, _network: ChainId) {
     this.signer = _signer;
+
+    _signer.provider?.getBalance(_signer.getAddress()).then(balance => {
+      console.log(
+        'Matic Balance for Gas: ',
+        bigIntToValue(balance, {
+          symbol: CurrencySymbol.MATIC,
+          name: 'Matic',
+          decimals: BigInt(18),
+        })
+      );
+    });
 
     const _address =
       _network === ChainId.POLYGON_POS
