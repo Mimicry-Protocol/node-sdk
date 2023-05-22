@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.2.1",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -78,5 +78,12 @@
     "globals": {
       "__DEV__": true
     }
+  },
+  "np": {
+    "contents": "dist"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }
