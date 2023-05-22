@@ -67,5 +67,10 @@
   },
   "dependencies": {
     "ethers": "^6.4.0"
+  },
+  "jest": {
+    "globals": {
+      "__DEV__": true
+    }
   }
 }

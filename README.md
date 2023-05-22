@@ -55,4 +55,3 @@ This builds to `/dist` and runs the project in watch mode so any edits you save 
 - To analyize package size, use `yarn size`.
 - To visualize package size, use `yarn size:analyze`.
 - To publish to NPM, use `yarn publish`.
-

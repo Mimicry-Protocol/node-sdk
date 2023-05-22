@@ -1,4 +1,4 @@
-import { sum } from '../src';
+import { sum } from '../src/lib/utils/sum';
 
 describe('blah', () => {
   it('works', () => {
