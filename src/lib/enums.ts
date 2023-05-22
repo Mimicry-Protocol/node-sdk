@@ -9,6 +9,19 @@ export enum CurrencySymbol {
   USDC = 'usdc',
 }
 
+// export enum Direction {
+//   LONG = 'long',
+//   SHORT = 'short',
+// }
+
 export enum MetricType {
   MARKET_CAP = 'marketcap',
 }
+
+// export enum TransferType {
+//   DEPOSIT = 'deposit',
+//   WITHDRAW = 'withdraw',
+//   FEE_PAYMENT = 'fee-payment',
+//   FEE_CREDIT = 'fee-credit',
+//   REWARD = 'token-reward',
+// }
