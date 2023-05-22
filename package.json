@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "prepare": "tsdx build",
-    "test": "tsdx test --no-cache && tsdx lint && size-limit",
+    "test": "tsdx lint --fix && tsdx test --no-cache && size-limit",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
     "size": "size-limit",

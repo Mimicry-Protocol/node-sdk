@@ -48,10 +48,6 @@ yarn start
 
 This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
 
-- To do a one-off build, use `yarn build`.
-- To run tests, use `yarn test`.
-- To run linting, use `yarn lint`.
-- To run linting and fix issues, use `yarn lint:fix`.
-- To analyize package size, use `yarn size`.
-- To visualize package size, use `yarn size:analyze`.
-- To publish to NPM, use `yarn publish`.
+- Use `yarn build` to do a one-off build.
+- Use `yarn test` to fix linting issues, run tests, and check distribution size.
+- Use `yarn publish` to publish to NPM.
