@@ -7,6 +7,7 @@ export enum CurrencySymbol {
   USD = 'usd',
   WETH = 'weth',
   USDC = 'usdc',
+  MATIC = 'matic',
 }
 
 export enum Direction {
