@@ -1,3 +1,4 @@
+import { Decimal } from 'decimal.js';
 import { CurrencyInfo, Value } from '../types';
 
 /**
@@ -8,15 +9,8 @@ export function bigIntToValue(
   currencyInfo: CurrencyInfo
 ): Value {
   const decimals = Number(currencyInfo.decimals);
-  const decimal = Number(value) / Math.pow(10, decimals);
+  const decimal = new Decimal(Number(value) / Math.pow(10, decimals));
   const atomic = value;
-
-  // Handle potential loss of precision
-  if (!isFinite(decimal)) {
-    throw new Error(
-      'Conversion to decimal resulted in a value outside the safe range for JavaScript numbers'
-    );
-  }
 
   return {
     currency: currencyInfo,

@@ -1,8 +1,9 @@
+import { Decimal } from 'decimal.js';
 import { CurrencySymbol, MetricType } from './enums';
 
 export type Amount = {
   atomic: BigInt; // e.g. 26476561042796000000000
-  decimal: number; // e.g. 26476.561042796
+  decimal: Decimal; // e.g. 26476.561042796
 };
 
 export type CurrencyInfo = {
@@ -27,6 +28,15 @@ export type Skew = {
   long: Amount;
   short: Amount;
 };
+
+// // Deposit or Withdraw event
+// export type Transfer = {
+//   id: number;
+//   cratedAt: Date;
+//   direction: Direction;
+//   type: TransferType;
+//   values: Value[]; // allows for multiple-currency withdraws
+// }
 
 export type Value = {
   currency: CurrencyInfo;
