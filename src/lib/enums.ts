@@ -9,10 +9,10 @@ export enum CurrencySymbol {
   USDC = 'usdc',
 }
 
-// enum Direction {
-//   SHORT,
-//   LONG
-// }
+export enum Direction {
+  SHORT,
+  LONG,
+}
 
 export enum MetricType {
   MARKET_CAP = 'marketcap',

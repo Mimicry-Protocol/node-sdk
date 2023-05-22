@@ -23,6 +23,8 @@ try {
     console.log("\nPosition Value:");
     console.log(await milady.getPositionValue(14));
 
+    console.log(await milady.closePosition(14));
+
 } catch (error) {
     console.log(error);
 }

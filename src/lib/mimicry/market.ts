@@ -1,6 +1,6 @@
 import { Contract, Signer, ContractTransactionResponse } from 'ethers';
 import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
-import { CurrencySymbol } from '../enums';
+import { CurrencySymbol, Direction } from '../enums';
 import { Currency } from './currency';
 import { bigIntToValue } from '../utils/bigIntToValue';
 import * as MarketABI from './abi/market.json';
@@ -68,6 +68,8 @@ export class Market {
     };
   }
 
+  // TODO: Add addMarket()
+
   // ---- CURRENCY INFO -------------------------------------------------------
   public async getCurrencyInfo(
     _address: string | CurrencySymbol
@@ -99,6 +101,44 @@ export class Market {
       currencyInfo
     );
   }
+
+  public async closePosition(
+    _positionId: number
+  ): Promise<ContractTransactionResponse> {
+    if (await !this.contract.isPositionEditable(_positionId)) {
+      throw new Error('Position is not editable.');
+    }
+    if (await !this.contract.isPositionLiquidated(_positionId)) {
+      throw new Error('Position has been liquidated.');
+    }
+
+    return await this.contract.closePosition(_positionId);
+  }
+
+  // public async openPosition(
+  //   _direction: Direction,
+  //   _currencyAddress: string,
+  //   _amount: BigInt
+  // ): Promise<ContractTransactionResponse> {
+  //   // TODO: Account for spending approvals
+  //   return await this.contract.openPosition(
+  //     _direction,
+  //     _currencyAddress,
+  //     _amount
+  //   );
+  // }
+
+  // public async increasePosition(
+  //   _positionId: number,
+  //   _amount: BigInt
+  // ): Promise<ContractTransactionResponse> {
+  //   // TODO: Account for spending approvals
+  //   if (await !this.contract.isPositionEditable(_positionId)) {
+  //     throw new Error('Position is not editable.');
+  //   }
+
+  //   return await this.contract.increasePosition(_positionId, _amount);
+  // }
 
   // ---- VALUE TRANSFERS -----------------------------------------------------
   public async commitValueTransfer(): Promise<ContractTransactionResponse> {
