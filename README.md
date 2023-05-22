@@ -28,12 +28,13 @@ The SDK allows developers to instantiate an instance in a few lines of code. For
 ```typescript
 import { MimicrySDK } from "@mimicry/mimicry-sdk";
 import { ethers } from "ethers";
+import 'dotenv/config';
 
-const pk = process.env.PRIVATE_KEY;
+const privateKey = process.env.PRIVATE_KEY;
 const providerUrl = process.env.PROVIDER_URL;
-const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-const signer = new ethers.Wallet(pk as string, provider);
-const mimicry = new MimicrySDK(signer);
+const provider = new ethers.JsonRpcProvider(providerUrl);
+const signer = new ethers.Wallet(privateKey, provider);
+const mimicry = new MimicrySDK(signer, 80001);
 ```
 
 
