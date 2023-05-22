@@ -13,7 +13,9 @@ try {
     const signer = new ethers.Wallet(privateKey, provider);
     const mimicry = new Mimicry(signer, 80001);
 
-    console.log(await mimicry.factory.getMarkets());
+    const markets = await mimicry.getMarkets();
+    console.log(await markets[0].getName());
+
     console.log(sum(1, 2));
 } catch (error) {
     console.log(error.message);

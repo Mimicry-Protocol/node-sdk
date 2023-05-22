@@ -1,6 +1,6 @@
 import { Signer, Contract } from 'ethers';
 import * as MimicryABI from './abi/mimicry.json';
-// import { Market } from './market';
+import { Market } from './market';
 // import { MarketInfo } from '../types';
 
 export class Mimicry {
@@ -23,7 +23,12 @@ export class Mimicry {
 
   public async getMarkets() {
     const markets = await this.contract.getMarkets();
-    return markets;
+    let marketInfos = [];
+    for (const address of markets) {
+      const marketInfo = new Market(address, this.signer);
+      marketInfos.push(marketInfo);
+    }
+    return marketInfos;
   }
 
   // ---- MARKETS ---------------------------------------------------------------
