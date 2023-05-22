@@ -1,4 +1,5 @@
 import { Mimicry, ChainId } from '../dist/index.js';
+// import { Mimicry, ChainId } from '@mimicry/sdk';
 import { ethers } from "ethers";
 import 'dotenv/config';
 
