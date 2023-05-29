@@ -1,10 +1,11 @@
 import { Contract, Signer, ContractTransactionResponse } from 'ethers';
 import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
-import { CurrencySymbol, Direction } from '../enums';
+import { CurrencySymbol, Direction, OracleType } from '../enums';
 import { Currency } from './currency';
 import { bigIntToValue } from '../utils/bigIntToValue';
 import { numberToBigInt } from '../utils/numberToBigInt';
 import * as MarketABI from './abi/market.json';
+import * as OpenMarketsOracleABI from './abi/openMarketsOracle.json';
 
 export class Market {
   private contract: Contract;
@@ -64,6 +65,22 @@ export class Market {
 
   public async getReferenceValue(_currencyInfo: CurrencyInfo): Promise<Value> {
     return bigIntToValue(await this.contract.getIndexValue(), _currencyInfo);
+  }
+
+  public async getReferenceValues(): Promise<any> {
+    const metadata = await this.getMetadata();
+    if (metadata.oracle.type !== OracleType.OMO) {
+      throw new Error('Only OMO oracles are supported');
+    }
+    const oracleId = metadata.oracle.dataFeedId;
+    const oracleAddress = metadata.oracle.address;
+    const oracle = new Contract(oracleAddress, OpenMarketsOracleABI.abi as any, this.signer);
+    
+    // TODO: Debug why I can't set a limit or offset
+    // TODO: Loop through 1000 at a time until I have all the values
+    // TODO: Then convert the values into candles
+    const values = await oracle.getValues(oracleId);
+    return values;
   }
 
   public async getSkew(): Promise<Skew> {

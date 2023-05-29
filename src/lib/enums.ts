@@ -19,6 +19,10 @@ export enum MetricType {
   MARKET_CAP = 'marketcap',
 }
 
+export enum OracleType {
+  OMO = 'open-markets-oracle',
+}
+
 // export enum TransferType {
 //   DEPOSIT = 'deposit',
 //   WITHDRAW = 'withdraw',
