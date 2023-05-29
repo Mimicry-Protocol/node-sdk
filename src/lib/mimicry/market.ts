@@ -88,7 +88,6 @@ export class Market {
       if (values.length < limit || values.length === 0) {
         done = true;
       }
-      // add values to allValues
       allValues = allValues.concat(values);
       offset += limit;
       if (__DEV__) {
@@ -96,7 +95,7 @@ export class Market {
       }
     }
 
-    // TODO: Then convert the values into candles
+    // TODO: Then convert the values into candles; this can be getHistoricCandles(timeframe, limit, offset)
     return allValues;
   }
 
