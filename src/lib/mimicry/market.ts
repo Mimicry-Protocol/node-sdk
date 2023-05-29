@@ -66,7 +66,6 @@ export class Market {
     return bigIntToValue(await this.contract.getIndexValue(), _currencyInfo);
   }
 
-  
   // TODO: Optimize this so that it caches the values
   public async getReferenceValues(): Promise<any> {
     const metadata = await this.getMetadata();
@@ -74,15 +73,11 @@ export class Market {
       throw new Error('Only OMO oracles are supported');
     }
     const abi = [
-      "function getValues(uint256 dataFeedId, uint256 limit, uint256 offset) view returns ((uint256, uint256)[])",
+      'function getValues(uint256 dataFeedId, uint256 limit, uint256 offset) view returns ((uint256, uint256)[])',
     ];
     const oracleId = metadata.oracle.dataFeedId;
     const oracleAddress = metadata.oracle.address;
-    const oracle = new Contract(
-      oracleAddress,
-      abi as any,
-      this.signer
-    );
+    const oracle = new Contract(oracleAddress, abi as any, this.signer);
 
     let offset = 0;
     let limit = 1000;
@@ -90,13 +85,11 @@ export class Market {
     let done: boolean = false;
     while (!done) {
       const values = await oracle.getValues(oracleId, limit, offset);
-      if (values.length < limit ||
-        values.length === 0
-      ) {
+      if (values.length < limit || values.length === 0) {
         done = true;
       }
       // add values to allValues
-      allValues = allValues.concat(values); 
+      allValues = allValues.concat(values);
       offset += limit;
       if (__DEV__) {
         console.log(`Offset: ${offset}`);
