@@ -7,15 +7,20 @@ export enum CurrencySymbol {
   USD = 'usd',
   WETH = 'weth',
   USDC = 'usdc',
+  MATIC = 'matic',
 }
 
-// export enum Direction {
-//   LONG = 'long',
-//   SHORT = 'short',
-// }
+export enum Direction {
+  SHORT,
+  LONG,
+}
 
 export enum MetricType {
   MARKET_CAP = 'marketcap',
+}
+
+export enum OracleType {
+  OMO = 'open-markets-oracle',
 }
 
 // export enum TransferType {

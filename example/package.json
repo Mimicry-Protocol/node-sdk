@@ -1,7 +1,7 @@
 {
     "type": "module",
     "dependencies": {
-        "@mimicry/sdk": "^1.0.0",
+        "@mimicry/sdk": "latest",
         "dotenv": "^16.0.3",
         "ethers": "^6.4.0"
     }
