@@ -73,6 +73,7 @@ export class Market {
   }
 
   // TODO: Add addMarket()
+  // TODO: Add updateMetadata() // break this down into updateName(), updateDescription(), updateImage()
 
   // ---- CURRENCY INFO -------------------------------------------------------
   public async getCurrencyInfo(
