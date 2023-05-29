@@ -69,29 +69,17 @@ const remilio = await mimicry.getMarket('0x123');
 // Get market name, address, description, image, metric, reference value, and skew of deposited capital
 const infoObject = await remilio.getInfo();
 
-// Get the metadata for a market
-const metadata = await remilio.getMetadata();
-
-// Get the reference price of a market
-const referencePrice = await remilio.getReferenceValue();
-
-// Get the address of a market's liquidity pool
-const address = await remilio.getAddress();
-
-// Get the skew of long/short capital for a market's liquidity pool
-const skew = await remilio.getSkew();
-
 // Open a position
 const tx = await remilio.openPosition(Direction.SHORT, mockUsdc, 13.75);
-
-// Get the value of a specific position
-const positionValue = await remilio.getPositionValue(15);
 
 // Close a specific position
 const tx = await remilio.closePosition(15);
 
 // Commit a value transfer in a market based on the current skew
 const tx = await remilio.commitValueTransfer();
+
+// Get the value of a specific position
+const positionValue = await remilio.getPositionValue(28);
 ```
 
 
