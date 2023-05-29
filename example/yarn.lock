@@ -6,7 +6,7 @@
   version "1.9.0"
   resolved "https://github.com/ricmoo/ens-normalize.js#2d040533e57e4f25f9a7cc4715e219658ad454b5"
 
-"@mimicry/sdk@^1.0.0":
+"@mimicry/sdk@latest":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@mimicry/sdk/-/sdk-1.0.0.tgz#30cc6d298c3394dad4eb8e4c826097889709bb77"
   integrity sha512-wcKyS6Ll5AX7PS/8+sp2MaY94lpLiJSuV5SRT3LVPfnpXt4FgX4+npkztwR43G16nq7brE/7xSwL0hY26n7Zzw==

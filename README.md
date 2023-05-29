@@ -38,7 +38,7 @@ const mimicry = new Mimicry(signer, ChainId.MUMBAI);
 ```
 
 ## Usage
-The SDK provides a number of methods to interact with the Mimicry Protocol. See [`./example/index.js`](https://github.com/Mimicry-Protocol/node-sdk/blob/main/example/index.js) for a full example.
+The SDK provides a number of methods to interact with the Mimicry Protocol. See [`./example/`](https://github.com/Mimicry-Protocol/node-sdk/blob/main/example/) for a full example.
 
 Here is a summary of the methods available:
 
