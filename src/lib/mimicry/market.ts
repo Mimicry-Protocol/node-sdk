@@ -44,6 +44,9 @@ export class Market {
 
   public async getMetadata(): Promise<any> {
     const url = await this.contract.metadataURI();
+    if (__DEV__) {
+      console.log(`Market Metadata URL: ${url}`);
+    }
     const response = await fetch(url);
     const json = await response.json();
     return json;
