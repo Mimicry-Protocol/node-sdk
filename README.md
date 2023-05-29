@@ -26,7 +26,7 @@ The intended audience is professional traders and market makers who wish to prog
 ## Setup
 The SDK allows developers to instantiate an instance in a few lines of code. For example:
 ```typescript
-import { Mimicry, ChainId } from "@mimicry/mimicry-sdk";
+import { Mimicry, ChainId, Direction } from "@mimicry/mimicry-sdk";
 import { ethers } from "ethers";
 import 'dotenv/config';
 
@@ -38,7 +38,61 @@ const mimicry = new Mimicry(signer, ChainId.MUMBAI);
 ```
 
 ## Usage
-The SDK provides a number of methods to interact with the Mimicry Protocol. See `./example/index.js` for a full example.
+The SDK provides a number of methods to interact with the Mimicry Protocol. See [`./example/index.js`](https://github.com/Mimicry-Protocol/node-sdk/blob/main/example/index.js) for a full example.
+
+Here is a summary of the methods available:
+
+### Currencies - [link to Currency class](https://github.com/Mimicry-Protocol/node-sdk/blob/main/src/lib/mimicry/currency.ts)
+```typescript
+// Get all supported currencies
+const currencies = await mimicry.getCurrencies();
+
+// Get a specific currency by address
+const mockUsdc = await mimicry.getCurrency('0x123'); 
+
+// Get currency name, symbol, address, decimals
+const infoObject = await mockUsdc.getInfo(); 
+
+// Approve spending of a currency; 
+// note this is done automatically when opening a position
+const tx = await mockUsdc.approveSpending('0x456', 10.50); 
+```
+
+### Markets - [link to Market class](https://github.com/Mimicry-Protocol/node-sdk/blob/main/src/lib/mimicry/market.ts)
+```typescript
+// Get all known markets
+const markets = await mimicry.getMarkets();
+
+// Get one market
+const remilio = await mimicry.getMarket('0x123');
+
+// Get market name, address, description, image, metric, reference value, and skew of deposited capital
+const infoObject = await remilio.getInfo();
+
+// Get the metadata for a market
+const metadata = await remilio.getMetadata();
+
+// Get the reference price of a market
+const referencePrice = await remilio.getReferenceValue();
+
+// Get the address of a market's liquidity pool
+const address = await remilio.getAddress();
+
+// Get the skew of long/short capital for a market's liquidity pool
+const skew = await remilio.getSkew();
+
+// Open a position
+const tx = await remilio.openPosition(Direction.SHORT, mockUsdc, 13.75);
+
+// Get the value of a specific position
+const positionValue = await remilio.getPositionValue(15);
+
+// Close a specific position
+const tx = await remilio.closePosition(15);
+
+// Commit a value transfer in a market based on the current skew
+const tx = await remilio.commitValueTransfer();
+```
 
 
 ## For Contributors
