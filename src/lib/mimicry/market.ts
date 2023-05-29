@@ -66,6 +66,8 @@ export class Market {
     return bigIntToValue(await this.contract.getIndexValue(), _currencyInfo);
   }
 
+  
+  // TODO: Optimize this so that it caches the values
   public async getReferenceValues(): Promise<any> {
     const metadata = await this.getMetadata();
     if (metadata.oracle.type !== OracleType.OMO) {
