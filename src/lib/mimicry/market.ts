@@ -9,6 +9,7 @@ import * as MarketABI from './abi/market.json';
 export class Market {
   private contract: Contract;
   private signer: Signer;
+  private metadata?: any;
 
   constructor(_contract: Contract, _signer: Signer) {
     this.contract = _contract;
@@ -42,13 +43,18 @@ export class Market {
     return info;
   }
 
-  public async getMetadata(): Promise<any> {
+  public async getMetadata(force: boolean = false): Promise<any> {
+    if (this.metadata && !force) {
+      return this.metadata;
+    }
+
     const url = await this.contract.metadataURI();
     if (__DEV__) {
       console.log(`Market Metadata URL: ${url}`);
     }
     const response = await fetch(url);
     const json = await response.json();
+    this.metadata = json;
     return json;
   }
 
