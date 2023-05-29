@@ -5,7 +5,6 @@ import { Currency } from './currency';
 import { bigIntToValue } from '../utils/bigIntToValue';
 import { numberToBigInt } from '../utils/numberToBigInt';
 import * as MarketABI from './abi/market.json';
-import * as OpenMarketsOracleABI from './abi/openMarketsOracle.json';
 
 export class Market {
   private contract: Contract;
@@ -72,19 +71,38 @@ export class Market {
     if (metadata.oracle.type !== OracleType.OMO) {
       throw new Error('Only OMO oracles are supported');
     }
+    const abi = [
+      "function getValues(uint256 dataFeedId, uint256 limit, uint256 offset) view returns ((uint256, uint256)[])",
+    ];
     const oracleId = metadata.oracle.dataFeedId;
     const oracleAddress = metadata.oracle.address;
     const oracle = new Contract(
       oracleAddress,
-      OpenMarketsOracleABI.abi as any,
+      abi as any,
       this.signer
     );
 
-    // TODO: Debug why I can't set a limit or offset
-    // TODO: Loop through 1000 at a time until I have all the values
+    let offset = 0;
+    let limit = 1000;
+    let allValues: any[] = [];
+    let done: boolean = false;
+    while (!done) {
+      const values = await oracle.getValues(oracleId, limit, offset);
+      if (values.length < limit ||
+        values.length === 0
+      ) {
+        done = true;
+      }
+      // add values to allValues
+      allValues = allValues.concat(values); 
+      offset += limit;
+      if (__DEV__) {
+        console.log(`Offset: ${offset}`);
+      }
+    }
+
     // TODO: Then convert the values into candles
-    const values = await oracle.getValues(oracleId);
-    return values;
+    return allValues;
   }
 
   public async getSkew(): Promise<Skew> {
