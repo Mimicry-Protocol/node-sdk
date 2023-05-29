@@ -74,8 +74,12 @@ export class Market {
     }
     const oracleId = metadata.oracle.dataFeedId;
     const oracleAddress = metadata.oracle.address;
-    const oracle = new Contract(oracleAddress, OpenMarketsOracleABI.abi as any, this.signer);
-    
+    const oracle = new Contract(
+      oracleAddress,
+      OpenMarketsOracleABI.abi as any,
+      this.signer
+    );
+
     // TODO: Debug why I can't set a limit or offset
     // TODO: Loop through 1000 at a time until I have all the values
     // TODO: Then convert the values into candles
@@ -94,8 +98,6 @@ export class Market {
       short: short.amount,
     };
   }
-
-  
 
   // ---- CURRENCY INFO -------------------------------------------------------
   public async getCurrencyInfo(
