@@ -95,16 +95,15 @@ This builds to `/dist` and runs the project in watch mode so any edits you save 
 
 - Use `yarn build` to do a one-off build.
 - Use `yarn analyize` to fix linting issues, run tests, and check distribution size.
-- Use `yarn publish` to publish to NPM.
+- Use `yarn publish` to publish to NPM. Note there is a weird quirk where you need to commit and sync the `package.json` version number at the start of the process, before entering the NPM 2FA code. Otherwise, the version number will be out of sync with the published package.
 
 
 ## Roadmap
 - [ ] Add support for returning the token id and url when opening a position
 - [ ] Add support for querying a market's price history as candles with pagination and filtering
-- [ ] Add support for querying a player's position history with pagination and filtering
-- [ ] Add support for querying a market's position history with pagination and filtering
+- [ ] Add support for subgraph querying a player's position history with pagination and filtering
+- [ ] Add support for subgraph querying a market's position history with pagination and filtering
 - [ ] Add support for adding new markets
 - [ ] Add support for editing market name, description, or image
 - [ ] Add support for querying markets more efficiently
-- [ ] Add support for querying player earning statistics
-- [ ] Add support for running strategy backtests
+- [ ] Add support for subgraph querying player earning statistics
