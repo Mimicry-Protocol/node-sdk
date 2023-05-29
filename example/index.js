@@ -21,10 +21,12 @@ try {
     console.log(await remilio.getInfo());
 
     console.log("\nPosition Value:");
-    console.log(await remilio.getPositionValue(15));
+    console.log(await remilio.getPositionValue(28));
 
     // console.log(await milady.closePosition(14));
-    console.log(await remilio.openPosition(Direction.SHORT, mockUsdc, 13.75));
+    // console.log(await remilio.openPosition(Direction.SHORT, mockUsdc, 13.75));
+
+    console.log(await remilio.commitValueTransfer());
 
 } catch (error) {
     console.log(error);

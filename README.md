@@ -111,9 +111,11 @@ This builds to `/dist` and runs the project in watch mode so any edits you save 
 
 
 ## Roadmap
+- [ ] Add support for returning the token id and url when opening a position
 - [ ] Add support for querying a market's price history as candles with pagination and filtering
 - [ ] Add support for querying a player's position history with pagination and filtering
 - [ ] Add support for querying a market's position history with pagination and filtering
 - [ ] Add support for adding/editing markets
 - [ ] Add support for querying markets more efficiently
 - [ ] Add support for querying player earning statistics
+- [ ] Add support for running strategy backtests
