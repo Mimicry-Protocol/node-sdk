@@ -23,6 +23,9 @@ This NPM library provides convenient access to smart contracts used by the Mimic
 
 The intended audience is professional traders and market makers who wish to programmatically manage positions, and application developers who wish to integrate Mimicry Markets into their apps.
 
+## Installation
+Run `yarn add @mimicry/mimicry-sdk@latest` to install the SDK.
+
 ## Setup
 The SDK allows developers to instantiate an instance in a few lines of code. For example:
 ```typescript
