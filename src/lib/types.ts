@@ -23,6 +23,20 @@ export type MarketInfo = {
   skew: Skew;
 };
 
+// export type PlayerInfo = {
+//   address: string;
+//   positions: PositionInfo[];
+// };
+
+// export type PositionInfo = {
+//   id: number;
+//   createdAt: Date;
+//   // values: Value[];
+//   // value: Value;
+//   // isLong: boolean;
+//   // isOpen: boolean;
+// };
+
 export type Skew = {
   currency: CurrencyInfo;
   long: Amount;

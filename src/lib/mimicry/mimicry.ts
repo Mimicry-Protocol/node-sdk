@@ -1,16 +1,19 @@
 import { Signer, Contract } from 'ethers';
 import { ChainId, CurrencySymbol } from '../enums';
-import { Market } from './market';
 import { Currency } from './currency';
+import { Market } from './market';
+import { Player } from './player';
 import { bigIntToValue } from '../utils/bigIntToValue';
 import * as MimicryABI from './abi/mimicry.json';
 
 export class Mimicry {
   private signer: Signer;
   private contract: Contract;
+  private network: ChainId;
 
   constructor(_signer: Signer, _network: ChainId) {
     this.signer = _signer;
+    this.network = _network;
 
     _signer.provider?.getBalance(_signer.getAddress()).then(balance => {
       console.log(
@@ -67,5 +70,11 @@ export class Mimicry {
 
   // ---- PLAYERS ---------------------------------------------------------------
   // public async getPlayers(): Promise<Player[]> { return []; }
-  // public async getPlayer(_address: string): Promise<Player> {}
+
+  public async getPlayer(_address?: string): Promise<Player> {
+    if (!_address) {
+      _address = await this.signer.getAddress();
+    }
+    return await Player.initialize(_address, this.signer, this.network);
+  }
 }
