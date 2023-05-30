@@ -1,6 +1,7 @@
 import { Contract, Signer } from 'ethers';
 import { ChainId } from '../enums';
 
+// @TODO: Setup Positions
 export class Player {
   private contract: Contract;
   private address: string;
@@ -21,8 +22,8 @@ export class Player {
     const abi = [
       // ERC721
       'function balanceOf(address owner) view returns (uint256)',
-      'function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)',
-      'function tokenURI(uint256 tokenId) view returns (string)',
+      'function tokenURI(uint256 tokenId) view returns (string)', // TODO: set baseURI to https://beta.mimicry.org/nft/
+      'function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)', // TOOD: upgrade to Enumerable
     ];
 
     const nftAddress =
@@ -34,15 +35,11 @@ export class Player {
     return new Player(contract, _address);
   }
 
+  // ---- NFTs ----------------------------------------------------------------
+  // @notice This fails until we upgrade to Enumerable
   public async getNFTs(): Promise<any> {
     const balance = await this.contract.balanceOf(this.address);
     const nfts = [];
-    console.log(await this.contract.symbol());
-    console.log(await this.getTokenURI(20));
-    // await this.contract.tokenOfOwnerByIndex(this.address, 0);
-
-    return true;
-
     for (let i = 0; i < balance; i++) {
       const tokenId = await this.contract.tokenOfOwnerByIndex(this.address, i);
       nfts.push(tokenId);
