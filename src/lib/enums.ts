@@ -24,14 +24,14 @@ export enum OracleType {
 }
 
 export enum Timeframe {
-  ONE_MINUTE = '1m',
-  FIVE_MINUTES = '5m',
-  FIFTEEN_MINUTES = '15m',
-  THIRTY_MINUTES = '30m',
-  ONE_HOUR = '1h',
-  FOUR_HOURS = '4h',
-  ONE_DAY = '1d',
-  ONE_WEEK = '1w',
+  ONE_MINUTE = 60,
+  FIVE_MINUTES = 60 * 5,
+  FIFTEEN_MINUTES = 60 * 15,
+  THIRTY_MINUTES = 60 * 30,
+  ONE_HOUR = 60 * 60,
+  FOUR_HOURS = 60 * 60 * 4,
+  ONE_DAY = 60 * 60 * 24,
+  ONE_WEEK = 60 * 60 * 24 * 7,
 }
 
 // export enum TransferType {

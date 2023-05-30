@@ -72,7 +72,8 @@
   },
   "dependencies": {
     "decimal.js": "^10.4.3",
-    "ethers": "^6.4.0"
+    "ethers": "^6.4.0",
+    "ohlc-resample": "^1.2.1"
   },
   "jest": {
     "globals": {

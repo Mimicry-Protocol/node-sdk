@@ -1,5 +1,7 @@
 import { isAddress, Contract } from 'ethers';
+import { resampleTicksByTime } from 'ohlc-resample';
 import { OracleType, Timeframe } from '../enums';
+import { IOHLCV, Tick } from '../types';
 
 export class Oracle {
   private contract: Contract;
@@ -15,11 +17,21 @@ export class Oracle {
     throw new Error('getTicks() method not implemented.');
   }
 
-  getCandles(timeframe: Timeframe): Promise<any> {
+  async getOHLCV(_timeframe: Timeframe): Promise<IOHLCV[]> {
+    throw new Error('getOHLCV() method not implemented.');
+  }
+
+  getOHLCVFromTicks(_ticks: Tick[], _timeframe: Timeframe): IOHLCV[] {
     if (__DEV__) {
-      console.log(`Oracle.getCandles(${timeframe})`);
+      console.log(`Oracle.getOHLCVFromTicks(${_timeframe})`);
     }
-    throw new Error('getCandles() method not implemented.');
+    const candles = resampleTicksByTime(_ticks, {
+      timeframe: _timeframe,
+      includeLatestCandle: false,
+      fillGaps: true,
+    });
+
+    return candles;
   }
 
   getContract(): Contract {
@@ -28,6 +40,17 @@ export class Oracle {
 
   getMetadata(): any {
     return this.metadata;
+  }
+
+  getTick(_time: BigInt, _price: BigInt, _quantity?: BigInt): Tick {
+    if (!_quantity) {
+      _quantity = BigInt(0);
+    }
+    return {
+      time: Number(_time),
+      price: Number(_price),
+      quantity: Number(_quantity),
+    };
   }
 
   validate(_metadata: any): void {

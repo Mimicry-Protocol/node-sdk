@@ -1,6 +1,6 @@
 import { Contract, Signer, ContractTransactionResponse } from 'ethers';
-import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
-import { CurrencySymbol, Direction, OracleType } from '../enums';
+import { CurrencyInfo, IOHLCV, MarketInfo, Skew, Value } from '../types';
+import { CurrencySymbol, Direction, OracleType, Timeframe } from '../enums';
 import { Currency } from './currency';
 import { Oracle } from './oracle';
 import { OpenMarketsOracle } from './vendors/oracles/openMarketsOracle';
@@ -99,6 +99,11 @@ export class Market {
   public async getTicks(): Promise<any> {
     const oracle = await this.getOracle();
     return await oracle.getTicks();
+  }
+
+  public async getOHLCV(_timeframe: Timeframe): Promise<IOHLCV[]> {
+    const oracle = await this.getOracle();
+    return await oracle.getOHLCV(_timeframe);
   }
 
   // ---- CURRENCY INFO -------------------------------------------------------

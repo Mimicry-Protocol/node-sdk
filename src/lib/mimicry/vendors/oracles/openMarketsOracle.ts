@@ -1,6 +1,7 @@
 import { Contract, Signer } from 'ethers';
 import { AbstractOracle } from './abstractOracle';
-import { OracleType } from '../../../enums';
+import { OracleType, Timeframe } from '../../../enums';
+import { IOHLCV, Tick } from '../../../types';
 import { Oracle } from '../../oracle';
 
 export class OpenMarketsOracle extends Oracle implements AbstractOracle {
@@ -32,10 +33,15 @@ export class OpenMarketsOracle extends Oracle implements AbstractOracle {
     return await this.getContract().getLatestValue(this.dataFeedId);
   }
 
-  async getTicks(): Promise<any> {
+  async getOHLCV(_timeframe: Timeframe): Promise<IOHLCV[]> {
+    const ticks = await this.getTicks();
+    return await this.getOHLCVFromTicks(ticks, _timeframe);
+  }
+
+  async getTicks(): Promise<Tick[]> {
     let offset = 0;
     let limit = 1000;
-    let allValues: any[] = [];
+    let ticks: Tick[] = [];
     let done: boolean = false;
     while (!done) {
       const values = await this.getContract().getValues(
@@ -46,14 +52,17 @@ export class OpenMarketsOracle extends Oracle implements AbstractOracle {
       if (values.length < limit || values.length === 0) {
         done = true;
       }
-      allValues = allValues.concat(values);
+      ticks = ticks.concat(
+        values.map((v: any) => {
+          return this.getTick(v[1], v[0]);
+        })
+      );
       offset += limit;
       if (__DEV__) {
         console.log(`Offset: ${offset}`);
       }
     }
-
-    return allValues;
+    return ticks;
   }
 
   validate(_metadata: any): void {

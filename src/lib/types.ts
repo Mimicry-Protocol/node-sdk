@@ -43,6 +43,21 @@ export type Skew = {
   short: Amount;
 };
 
+export type Tick = {
+  time: number;
+  price: number;
+  quantity: number;
+};
+
+export type IOHLCV = {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+};
+
 // // Deposit or Withdraw event
 // export type Transfer = {
 //   id: number;
