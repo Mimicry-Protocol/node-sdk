@@ -1,5 +1,5 @@
 import { isAddress, Contract } from 'ethers';
-import { batchTicksToCandle, ticksToTickChart, TradeTick, IOHLCV } from 'candlestick-convert';
+import { batchTicksToCandle, TradeTick, IOHLCV } from 'candlestick-convert';
 import { OracleType, Timeframe } from '../enums';
 
 export class Oracle {
@@ -25,9 +25,7 @@ export class Oracle {
       console.log(`Oracle.getOHLCVFromTicks(${_timeframe})`);
     }
     const candles = batchTicksToCandle(_ticks, 60, true);
-    console.log(candles);
-    const ohlcv = ticksToTickChart(_ticks, 100);
-    return ohlcv;
+    return candles;
   }
 
   getContract(): Contract {

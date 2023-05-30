@@ -20,7 +20,7 @@ try {
     const remilio = await mimicry.getMarket('0x1887c38229e4f87768fddc847ce70dec7ddf7cb6');
     // console.log(await remilio.getInfo());
 
-    console.log(await remilio.getTicks());
+    // console.log(await remilio.getTicks());
     console.log(await remilio.getOHLCV(Timeframe.FIVE_MINUTES));
 
     // console.log("\nPosition Value:");
