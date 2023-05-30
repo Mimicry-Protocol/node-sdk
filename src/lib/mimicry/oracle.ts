@@ -11,8 +11,8 @@ export class Oracle {
     this.metadata = _metadata;
   }
 
-  static intialize(): Promise<Oracle> {
-    throw new Error('intialize() method not implemented.');
+  async getTicks(): Promise<any> {
+    throw new Error('getTicks() method not implemented.');
   }
 
   getCandles(timeframe: Timeframe): Promise<any> {

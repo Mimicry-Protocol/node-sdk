@@ -2,6 +2,8 @@ import { Contract, Signer, ContractTransactionResponse } from 'ethers';
 import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
 import { CurrencySymbol, Direction, OracleType } from '../enums';
 import { Currency } from './currency';
+import { Oracle } from './oracle';
+import { OpenMarketsOracle } from './vendors/oracles/openMarketsOracle';
 import { bigIntToValue } from '../utils/bigIntToValue';
 import { numberToBigInt } from '../utils/numberToBigInt';
 import * as MarketABI from './abi/market.json';
@@ -10,6 +12,7 @@ export class Market {
   private contract: Contract;
   private signer: Signer;
   private metadata?: any;
+  private oracle?: Oracle;
 
   constructor(_contract: Contract, _signer: Signer) {
     this.contract = _contract;
@@ -20,9 +23,7 @@ export class Market {
     if (__DEV__) {
       console.log(`Initialize Market: ${_address}`);
     }
-
     const contract = new Contract(_address, MarketABI.abi as any, _signer);
-
     return new Market(contract, _signer);
   }
 
@@ -62,43 +63,6 @@ export class Market {
     return await this.contract.getAddress();
   }
 
-  public async getReferenceValue(_currencyInfo: CurrencyInfo): Promise<Value> {
-    return bigIntToValue(await this.contract.getIndexValue(), _currencyInfo);
-  }
-
-  // TODO: Optimize this so that it caches the values
-  public async getReferenceValues(): Promise<any> {
-    const metadata = await this.getMetadata();
-    if (metadata.oracle.type !== OracleType.OMO) {
-      throw new Error('Only OMO oracles are supported');
-    }
-    const abi = [
-      'function getValues(uint256 dataFeedId, uint256 limit, uint256 offset) view returns ((uint256, uint256)[])',
-    ];
-    const oracleId = metadata.oracle.dataFeedId;
-    const oracleAddress = metadata.oracle.address;
-    const oracle = new Contract(oracleAddress, abi as any, this.signer);
-
-    let offset = 0;
-    let limit = 1000;
-    let allValues: any[] = [];
-    let done: boolean = false;
-    while (!done) {
-      const values = await oracle.getValues(oracleId, limit, offset);
-      if (values.length < limit || values.length === 0) {
-        done = true;
-      }
-      allValues = allValues.concat(values);
-      offset += limit;
-      if (__DEV__) {
-        console.log(`Offset: ${offset}`);
-      }
-    }
-
-    // TODO: Then convert the values into candles; this can be getHistoricCandles(timeframe, limit, offset)
-    return allValues;
-  }
-
   public async getSkew(): Promise<Skew> {
     const positionValues = await this.contract.calculatePositionValues();
     const currencyInfo = await this.getCurrencyInfo(CurrencySymbol.USD);
@@ -109,6 +73,32 @@ export class Market {
       long: long.amount,
       short: short.amount,
     };
+  }
+
+  // ---- ORACLE --------------------------------------------------------------
+  public async getReferenceValue(_currencyInfo: CurrencyInfo): Promise<Value> {
+    return bigIntToValue(await this.contract.getIndexValue(), _currencyInfo);
+  }
+
+  public async getOracle(): Promise<Oracle> {
+    if (this.oracle) {
+      return this.oracle;
+    }
+    const metadata = await this.getMetadata();
+    if (metadata.oracle.type !== OracleType.OMO) {
+      throw new Error('Only OMO oracles are supported');
+    }
+    const oracle = await OpenMarketsOracle.initialize(
+      metadata.oracle,
+      this.signer
+    );
+    this.oracle = oracle;
+    return oracle;
+  }
+
+  public async getTicks(): Promise<any> {
+    const oracle = await this.getOracle();
+    return await oracle.getTicks();
   }
 
   // ---- CURRENCY INFO -------------------------------------------------------
