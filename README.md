@@ -70,7 +70,10 @@ const markets = await mimicry.getMarkets();
 const remilio = await mimicry.getMarket('0x123');
 
 // Get market name, address, description, image, metric, reference value, and skew of deposited capital
-const infoObject = await remilio.getInfo();
+const marketInfo = await remilio.getInfo();
+
+// Get market price history
+const priceHistory = await remilio.getTicks();
 
 // Open a position
 const tx = await remilio.openPosition(Direction.SHORT, mockUsdc, 13.75);
