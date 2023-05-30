@@ -1,5 +1,6 @@
 import { Contract, Signer, ContractTransactionResponse } from 'ethers';
-import { CurrencyInfo, IOHLCV, MarketInfo, Skew, Value } from '../types';
+import { IOHLCV } from 'candlestick-convert';
+import { CurrencyInfo, MarketInfo, Skew, Value } from '../types';
 import { CurrencySymbol, Direction, OracleType, Timeframe } from '../enums';
 import { Currency } from './currency';
 import { Oracle } from './oracle';

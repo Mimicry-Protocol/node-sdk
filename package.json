@@ -71,9 +71,9 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "candlestick-convert": "^6.0.0",
     "decimal.js": "^10.4.3",
-    "ethers": "^6.4.0",
-    "ohlc-resample": "^1.2.1"
+    "ethers": "^6.4.0"
   },
   "jest": {
     "globals": {

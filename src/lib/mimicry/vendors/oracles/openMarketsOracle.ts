@@ -1,7 +1,7 @@
 import { Contract, Signer } from 'ethers';
+import { TradeTick, IOHLCV } from 'candlestick-convert';
 import { AbstractOracle } from './abstractOracle';
 import { OracleType, Timeframe } from '../../../enums';
-import { IOHLCV, Tick } from '../../../types';
 import { Oracle } from '../../oracle';
 
 export class OpenMarketsOracle extends Oracle implements AbstractOracle {
@@ -38,10 +38,10 @@ export class OpenMarketsOracle extends Oracle implements AbstractOracle {
     return await this.getOHLCVFromTicks(ticks, _timeframe);
   }
 
-  async getTicks(): Promise<Tick[]> {
+  async getTicks(): Promise<TradeTick[]> {
     let offset = 0;
     let limit = 1000;
-    let ticks: Tick[] = [];
+    let ticks: TradeTick[] = [];
     let done: boolean = false;
     while (!done) {
       const values = await this.getContract().getValues(

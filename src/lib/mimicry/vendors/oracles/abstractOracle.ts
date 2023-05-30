@@ -1,6 +1,7 @@
 import { Contract } from 'ethers';
 import { Timeframe } from '../../../enums';
-import { IOHLCV } from '../../../types';
+import { IOHLCV } from 'candlestick-convert';
+
 
 export abstract class AbstractOracle {
   abstract getOHLCV(_timeframe: Timeframe): Promise<IOHLCV[]>;
