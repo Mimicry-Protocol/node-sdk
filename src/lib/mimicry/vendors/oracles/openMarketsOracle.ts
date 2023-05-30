@@ -8,7 +8,6 @@ export class OpenMarketsOracle extends Oracle implements AbstractOracle {
 
   constructor(_contract: Contract, _metadata: any) {
     super(_contract, _metadata);
-    this.validate(_metadata);
     this.dataFeedId = _metadata.dataFeedId;
   }
 
@@ -62,7 +61,7 @@ export class OpenMarketsOracle extends Oracle implements AbstractOracle {
     if (_metadata.type !== OracleType.OMO) {
       throw new Error('metadata.type must be "open-markets-oracle"');
     }
-    if (typeof _metadata.dataFeedId !== 'number' || _metadata.dataFeedId < 1) {
+    if (_metadata.dataFeedId < 1) {
       throw new Error('Must provide a valid dataFeedId for the oracle');
     }
     if (__DEV__) {
