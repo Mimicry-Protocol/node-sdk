@@ -1,14 +1,8 @@
 {
     "type": "module",
-    "scripts": {
-        "start": "http-server -c-1 -o candlesticks"
-    },
     "dependencies": {
         "@mimicry/sdk": "latest",
         "dotenv": "^16.0.3",
         "ethers": "^6.4.0"
-    },
-    "devDependencies": {
-        "http-server": "^14.1.1"
     }
 }
