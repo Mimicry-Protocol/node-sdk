@@ -1,4 +1,5 @@
 import { isAddress, Contract } from 'ethers';
+import { batchTicksToCandle, TradeTick, IOHLCV } from 'candlestick-convert';
 import { OracleType, Timeframe } from '../enums';
 
 export class Oracle {
@@ -15,11 +16,16 @@ export class Oracle {
     throw new Error('getTicks() method not implemented.');
   }
 
-  getCandles(timeframe: Timeframe): Promise<any> {
+  async getOHLCV(_timeframe: Timeframe): Promise<IOHLCV[]> {
+    throw new Error('getOHLCV() method not implemented.');
+  }
+
+  getOHLCVFromTicks(_ticks: TradeTick[], _timeframe: Timeframe): IOHLCV[] {
     if (__DEV__) {
-      console.log(`Oracle.getCandles(${timeframe})`);
+      console.log(`Oracle.getOHLCVFromTicks(${_timeframe})`);
     }
-    throw new Error('getCandles() method not implemented.');
+    const candles = batchTicksToCandle(_ticks, 60, true);
+    return candles;
   }
 
   getContract(): Contract {
@@ -28,6 +34,17 @@ export class Oracle {
 
   getMetadata(): any {
     return this.metadata;
+  }
+
+  getTick(_time: BigInt, _price: BigInt, _quantity?: BigInt): TradeTick {
+    if (!_quantity) {
+      _quantity = BigInt(0);
+    }
+    return {
+      time: Number(_time),
+      price: Number(_price),
+      quantity: Number(_quantity),
+    };
   }
 
   validate(_metadata: any): void {

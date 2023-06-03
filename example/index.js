@@ -1,4 +1,4 @@
-import { Mimicry, ChainId, Direction } from '../dist/index.js';
+import { Mimicry, ChainId, Direction, Timeframe } from '../dist/index.js';
 // import { Mimicry, ChainId } from '@mimicry/sdk';
 import { ethers } from "ethers";
 import 'dotenv/config';
@@ -18,9 +18,10 @@ try {
     // console.log(await mockUsdc.getInfo());
     
     const remilio = await mimicry.getMarket('0x1887c38229e4f87768fddc847ce70dec7ddf7cb6');
-    console.log(await remilio.getInfo());
+    // console.log(await remilio.getInfo());
 
-    console.log(await remilio.getTicks());
+    // console.log(await remilio.getTicks());
+    console.log(await remilio.getOHLCV(Timeframe.FIVE_MINUTES));
 
     // console.log("\nPosition Value:");
     // console.log(await remilio.getPositionValue(28));
