@@ -40,11 +40,12 @@ export class Mimicry {
 
   // ---- MARKETS ---------------------------------------------------------------
   public async getMarkets(): Promise<Market[]> {
-    const marketAddresses = await this.contract.getMarkets();
+    const marketInfos = await this.contract.getMarketInfos();
+    if (__DEV__) console.log(marketInfos);
     let markets = [];
-    for (const address of marketAddresses) {
-      const market = await this.getMarket(address);
-      markets.push(market);
+    for (const market of marketInfos) {
+      const marketInstance = await this.getMarket(market);
+      markets.push(marketInstance);
     }
     return markets;
   }

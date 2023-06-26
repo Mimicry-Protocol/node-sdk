@@ -113,3 +113,4 @@ This builds to `/dist` and runs the project in watch mode so any edits you save 
 - [ ] Add support for editing market name, description, or image
 - [ ] Add support for querying markets more efficiently
 - [ ] Add support for subgraph querying player earning statistics
+- [ ] Add support for ENS lookup on market names and player names
